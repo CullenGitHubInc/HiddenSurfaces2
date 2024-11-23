@@ -1,4 +1,4 @@
-// Get the WebGL rendering context
+// getting WebGL rendering context
 const canvas = document.getElementById("glCanvas");
 const gl = canvas.getContext("webgl");
 
@@ -6,7 +6,7 @@ if (!gl) {
     alert("WebGL not supported");
 }
 
-// Vertex shader program
+// vertex shader
 const vertexShaderSource = `
     attribute vec4 aPosition;
     attribute vec4 aColor;
@@ -18,7 +18,7 @@ const vertexShaderSource = `
     }
 `;
 
-// Fragment shader program
+// fragment shader
 const fragmentShaderSource = `
     varying lowp vec4 vColor;
 
@@ -27,7 +27,7 @@ const fragmentShaderSource = `
     }
 `;
 
-// Compile shaders
+// compile shaders
 function compileShader(gl, source, type) {
     const shader = gl.createShader(type);
     gl.shaderSource(shader, source);
@@ -40,7 +40,7 @@ function compileShader(gl, source, type) {
     return shader;
 }
 
-// Initialize shaders
+// initializing shaders
 function initShaderProgram(gl) {
     const vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
     const fragmentShader = compileShader(gl, fragmentShaderSource, gl.FRAGMENT_SHADER);
@@ -67,7 +67,7 @@ const programInfo = {
     },
 };
 
-// Define rectangles with overlapping positions and sizes
+// defining rectangles with the overlapping positions--sizes
 const rectangles = [
     {   // Farthest (z = -0.6, red)
         vertices: [
@@ -77,7 +77,7 @@ const rectangles = [
             -0.8,  0.8, -0.6, 1.0, 0.0, 0.0, 1.0, // Top left
         ]
     },
-    {   // Middle (z = -0.3, green)
+    {   // middle (z = -0.3, green)
         vertices: [
             -0.6, -0.6, -0.3, 0.0, 1.0, 0.0, 1.0, // Bottom left
             0.6, -0.6, -0.3, 0.0, 1.0, 0.0, 1.0, // Bottom right
@@ -85,7 +85,7 @@ const rectangles = [
             -0.6,  0.6, -0.3, 0.0, 1.0, 0.0, 1.0, // Top left
         ]
     },
-    {   // Closer (z = 0.0, blue)
+    {   // closer (z = 0.0, blue)
         vertices: [
             -0.4, -0.4, 0.0, 0.0, 0.0, 1.0, 1.0, // Bottom left
             0.4, -0.4, 0.0, 0.0, 0.0, 1.0, 1.0, // Bottom right
@@ -93,7 +93,7 @@ const rectangles = [
             -0.4,  0.4, 0.0, 0.0, 0.0, 1.0, 1.0, // Top left
         ]
     },
-    {   // Closest (z = 0.3, pink)
+    {   // closest (z = 0.3, pink)
         vertices: [
             -0.2, -0.2, 0.3, 1.0, 0.0, 1.0, 1.0, // Bottom left
             0.2, -0.2, 0.3, 1.0, 0.0, 1.0, 1.0, // Bottom right
@@ -103,10 +103,10 @@ const rectangles = [
     }
 ];
 
-// Painter's Algorithm: Sort rectangles by z-depth (back-to-front)
+// Painter's Algorithm for Sort rectangles 
 rectangles.sort((a, b) => a.vertices[2] - b.vertices[2]);
 
-// Buffer and draw each rectangle
+// buffer and draw each rectangle
 function drawRectangle(rect) {
     const vertexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
@@ -121,7 +121,7 @@ function drawRectangle(rect) {
     gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
 }
 
-// Clear the canvas and draw all rectangles
+// clearing the canvas and draw rectangles
 gl.clearColor(0.0, 0.0, 0.0, 1.0);
 gl.clear(gl.COLOR_BUFFER_BIT);
 
